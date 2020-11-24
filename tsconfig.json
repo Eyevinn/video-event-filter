@@ -4,9 +4,11 @@
     "esModuleInterop": true,
     "skipLibCheck": true,
     "lib": [
-      "ES2015",
-      "dom"
+      "es6",
+      "dom",
+      "es2017"
     ],
+    "target": "es5",
     "declaration": true,
     "declarationDir": "./dist",
     "emitDeclarationOnly": true
