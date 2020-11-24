@@ -3,6 +3,7 @@
   "version": "1.0.1",
   "description": "",
   "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "scripts": {
     "start": "parcel demo/index.html",
     "build": "rm -rf ./dist && parcel build index.ts && tsc"
