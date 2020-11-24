@@ -1,5 +1,5 @@
 {
-  "name": "video-event-filter",
+  "name": "@eyevinn/video-event-filter",
   "version": "1.0.0",
   "description": "",
   "main": "dist/index.js",
