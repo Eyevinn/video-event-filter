@@ -24,7 +24,7 @@ export enum PlayerEvents {
   Error = "error",
 };
 
-export class VideoElementFilter extends EmitterBaseClass {
+export class VideoEventFilter extends EmitterBaseClass {
   private videoElement: HTMLVideoElement;
   private state: PlayerState;
 

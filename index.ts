@@ -1,1 +1,5 @@
-export { VideoElementFilter, PlayerEvents, PlayerState } from "./src/VideoElementFilter";
+export {
+  VideoEventFilter,
+  PlayerEvents,
+  PlayerState,
+} from "./src/VideoEventFilter";

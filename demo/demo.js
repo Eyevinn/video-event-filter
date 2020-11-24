@@ -1,9 +1,9 @@
-import { VideoElementFilter } from "../index";
+import { VideoEventFilter } from "../index";
 
 document.addEventListener("DOMContentLoaded", () => {
   const videoElement = document.querySelector("video");
-  const videoElementFilter = new VideoElementFilter(videoElement);
-  videoElementFilter.addEventListener("*", (event, data) => {
+  const videoEventFilter = new VideoEventFilter(videoElement);
+  videoEventFilter.addEventListener("*", (event, data) => {
     console.log("EVENT:", event);
   });
 });

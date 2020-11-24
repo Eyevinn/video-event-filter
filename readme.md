@@ -15,12 +15,14 @@ The main differences that this filtering brings is
 ## Implementation
 
 ```js
-const videoElement = document.querySelector("video");
+  import { VideoEventFilter } from "@eyevinn/video-event-filter";
 
-const videoElementFilter = new VideoElementFilter(videoElement);
-videoElementFilter.addEventListener("*", (event) => {
-  console.log("Event: ", event);
-});
+  const videoElement = document.querySelector("video");
+
+  const videoEventFilter = new VideoEventFilter(videoElement);
+  videoEventFilter.addEventListener("*", (event, data) => {
+    console.log("EVENT:", event);
+  });
 ```
 
 ### Events
