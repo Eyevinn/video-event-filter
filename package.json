@@ -6,7 +6,8 @@
   "types": "dist/index.d.ts",
   "scripts": {
     "start": "parcel demo/index.html",
-    "build": "rm -rf ./dist && parcel build index.ts && tsc"
+    "build": "rm -rf ./dist && parcel build index.ts && tsc",
+    "prepare": "npm run build"
   },
   "keywords": [],
   "author": "",
