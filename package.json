@@ -10,8 +10,9 @@
     "prepare": "npm run build"
   },
   "keywords": [],
-  "author": "",
+  "author": "erik.hoffman@eyevinn.se",
   "license": "ISC",
+  "repository": "https://github.com/Eyevinn/video-event-filter",
   "devDependencies": {
     "@babel/cli": "^7.12.1",
     "@babel/core": "^7.12.3",
