@@ -6,10 +6,12 @@ env:
 extends:
   - eslint-config-prettier
   - eslint:recommended
+  - plugin:@typescript-eslint/recommended
 
 plugins:
   - prettier
   - jest
+  - '@typescript-eslint'
 
 globals:
   Promise: true
@@ -19,9 +21,10 @@ rules:
     - error
   arrow-body-style: off
   no-console: off
+  '@typescript-eslint/no-unused-vars': "error"
+  '@typescript-eslint/explicit-module-boundary-types': off
 
-
-parser: babel-eslint
+parser: '@typescript-eslint/parser'
 
 parserOptions:
   sourceType: module
