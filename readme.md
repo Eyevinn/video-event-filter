@@ -1,4 +1,4 @@
-Video Element Filter
+Video Event Filter
 ===
 
 A simple module to filter the events sent from the video element in a way that align with what is, most probably, expected from an analytics perspective.
