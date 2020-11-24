@@ -27,6 +27,8 @@ The main differences that this filtering brings is
 
 ### Events
 
+These are exposed as an Enum `PlayerEvents`.
+
 - `loading`
 - `loaded`, video have loaded, but not started
 - `play`, video have started to play
@@ -39,3 +41,16 @@ The main differences that this filtering brings is
 - `timeupdate`
 - `ended`
 - `error`
+
+### States
+
+You can also fetch the current state from the player, which will match the states exposed in `PlayerState`.
+
+```js
+  import { VideoEventFilter } from "@eyevinn/video-event-filter";
+
+  const videoElement = document.querySelector("video");
+  const videoEventFilter = new VideoEventFilter(videoElement);
+
+  const currentState = videoEventFilter.getState()
+```
