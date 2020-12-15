@@ -88,6 +88,7 @@ export class VideoEventFilter extends EmitterBaseClass {
 
   private onPause(): void {
     if (this.state !== PlayerState.Playing) return;
+    clearTimeout(this.pauseDebounce);
     this.pauseDebounce = setTimeout(() => {
       this.emit(PlayerEvents.Pause);
       this.setState(PlayerState.Paused, true);
