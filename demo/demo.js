@@ -1,4 +1,4 @@
-import { VideoEventFilter } from "../index";
+import { VideoEventFilter } from "../index.ts";
 
 document.addEventListener("DOMContentLoaded", () => {
   const videoElement = document.querySelector("video");
