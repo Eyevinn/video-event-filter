@@ -98,7 +98,7 @@ export class VideoEventFilter extends EmitterBaseClass {
   }
 
   private onSeeking(): void {
-    if (this.state === PlayerState.Seeking) return;
+    if ([PlayerState.Seeking, PlayerState.Ended].includes(this.state)) return;
     clearTimeout(this.pauseDebounce);
     this.setState(PlayerState.Seeking, true);
     this.emit(PlayerEvents.Seeking);
