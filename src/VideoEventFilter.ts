@@ -111,7 +111,7 @@ export class VideoEventFilter extends EmitterBaseClass {
   }
 
   private onBuffering(): void {
-    if ([PlayerState.Buffering, PlayerState.Seeking].includes(this.state)) return;
+    if ([PlayerState.Loading, PlayerState.Buffering, PlayerState.Seeking].includes(this.state)) return;
     this.setState(PlayerState.Buffering, true);
     this.emit(PlayerEvents.Buffering);
   }
