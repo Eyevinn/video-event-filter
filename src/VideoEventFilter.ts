@@ -7,7 +7,7 @@ export enum PlayerState {
   Buffering = "buffering",
   Seeking = "seeking",
   Ended = "ended",
-};
+}
 
 export enum PlayerEvents {
   Loading = "loading",
@@ -22,7 +22,7 @@ export enum PlayerEvents {
   TimeUpdate = "timeupdate",
   Ended = "ended",
   Error = "error",
-};
+}
 
 export class VideoEventFilter extends EmitterBaseClass {
   private videoElement: HTMLVideoElement;
@@ -111,7 +111,15 @@ export class VideoEventFilter extends EmitterBaseClass {
   }
 
   private onBuffering(): void {
-    if ([PlayerState.Loading, PlayerState.Buffering, PlayerState.Seeking].includes(this.state)) return;
+    if (
+      [
+        PlayerState.Loading,
+        PlayerState.Buffering,
+        PlayerState.Seeking,
+        PlayerState.Ended,
+      ].includes(this.state)
+    )
+      return;
     this.setState(PlayerState.Buffering, true);
     this.emit(PlayerEvents.Buffering);
   }
