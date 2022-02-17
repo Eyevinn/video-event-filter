@@ -1,7 +1,7 @@
-import mitt from "mitt";
+import mitt, { Emitter } from "mitt";
 
 export class EmitterBaseClass {
-  emitter: any;
+  emitter: Emitter;
   constructor() {
     this.emitter = mitt();
   }
@@ -14,6 +14,10 @@ export class EmitterBaseClass {
     if (this.emitter) {
       this.emitter.off.apply(this, [event, handler]);
     }
+  }
+
+  clear() {
+    this.emitter.all.clear();
   }
 
   emit(event, data?) {

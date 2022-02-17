@@ -8,7 +8,8 @@
   "scripts": {
     "start": "parcel demo/index.html",
     "build": "rm -rf ./dist && parcel build index.ts && tsc",
-    "prepare": "npm run build"
+    "prepare": "npm run build",
+    "postversion": "git push --no-verify && git push --tags --no-verify"
   },
   "keywords": [],
   "author": "erik.hoffman@eyevinn.se",
