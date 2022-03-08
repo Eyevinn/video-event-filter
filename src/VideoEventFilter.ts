@@ -47,7 +47,7 @@ export class VideoEventFilter extends EmitterBaseClass {
 
   private setupEventListeners(): void {
     this.videoElement.addEventListener(
-      "canplaythrough",
+      "loadeddata",
       this.onLoaded.bind(this)
     );
     this.videoElement.addEventListener("playing", this.onPlaying.bind(this));
