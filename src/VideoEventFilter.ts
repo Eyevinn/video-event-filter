@@ -46,10 +46,7 @@ export class VideoEventFilter extends EmitterBaseClass {
   }
 
   private setupEventListeners(): void {
-    this.videoElement.addEventListener(
-      "loadeddata",
-      this.onLoaded.bind(this)
-    );
+    this.videoElement.addEventListener("loadeddata", this.onLoaded.bind(this));
     this.videoElement.addEventListener("playing", this.onPlaying.bind(this));
     this.videoElement.addEventListener("pause", this.onPause.bind(this));
     this.videoElement.addEventListener("seeking", this.onSeeking.bind(this));
