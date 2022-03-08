@@ -95,7 +95,12 @@ export class VideoEventFilter extends EmitterBaseClass {
   }
 
   private onSeeking(): void {
-    if ([PlayerState.Seeking, PlayerState.Ended].includes(this.state)) return;
+    if (
+      [PlayerState.Loading, PlayerState.Seeking, PlayerState.Ended].includes(
+        this.state
+      )
+    )
+      return;
     clearTimeout(this.pauseDebounce);
     this.setState(PlayerState.Seeking, true);
     this.emit(PlayerEvents.Seeking);
@@ -130,6 +135,7 @@ export class VideoEventFilter extends EmitterBaseClass {
   private onTimeUpdate(): void {
     if (
       [
+        PlayerState.Loading,
         PlayerState.Paused,
         PlayerState.Seeking,
         PlayerState.Buffering,
