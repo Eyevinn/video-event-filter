@@ -46,6 +46,7 @@ export class VideoEventFilter extends EmitterBaseClass {
   }
 
   private setupEventListeners(): void {
+    this.videoElement.addEventListener("loadstart", this.onLoading.bind(this));
     this.videoElement.addEventListener("loadeddata", this.onLoaded.bind(this));
     this.videoElement.addEventListener("playing", this.onPlaying.bind(this));
     this.videoElement.addEventListener("pause", this.onPause.bind(this));
@@ -58,6 +59,12 @@ export class VideoEventFilter extends EmitterBaseClass {
     );
     this.videoElement.addEventListener("error", this.onError.bind(this));
     this.videoElement.addEventListener("ended", this.onEnded.bind(this));
+  }
+
+  private onLoading(): void {
+    if (this.state === PlayerState.Loading) return;
+    this.setState(PlayerState.Loading);
+    this.emit(PlayerEvents.Loading);
   }
 
   private onLoaded(): void {
