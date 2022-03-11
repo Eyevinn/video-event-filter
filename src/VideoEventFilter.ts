@@ -1,6 +1,7 @@
 import { EmitterBaseClass } from "./EmitterBaseClass";
 
 export enum PlayerState {
+  Idle = "idle",
   Loading = "loading",
   Playing = "playing",
   Paused = "paused",
@@ -24,11 +25,40 @@ export enum PlayerEvents {
   Error = "error",
 }
 
+enum NetworkState {
+  NETWORK_EMPTY,
+  NETWORK_IDLE,
+  NETWORK_LOADING,
+  NETWORK_NO_SOURCE,
+}
+
+enum ReadyState {
+  HAVE_NOTHING,
+  HAVE_METADATA,
+  HAVE_CURRENT_DATA,
+  HAVE_FUTURE_DATA,
+  HAVE_ENOUGH_DATA,
+}
+
+function getInitialState(videoElement: HTMLVideoElement): PlayerState {
+  if (
+    videoElement.readyState === ReadyState.HAVE_NOTHING &&
+    videoElement.networkState === NetworkState.NETWORK_EMPTY
+  ) {
+    return PlayerState.Idle;
+  } else if (videoElement.networkState === NetworkState.NETWORK_LOADING) {
+    return PlayerState.Loading;
+  } else if (!videoElement.ended) {
+    return videoElement.paused ? PlayerState.Paused : PlayerState.Playing;
+  }
+  return PlayerState.Ended;
+}
+
 export class VideoEventFilter extends EmitterBaseClass {
   private videoElement: HTMLVideoElement;
   private state: PlayerState;
 
-  private pauseDebounce;
+  private pauseDebounce: number;
   private lastState: PlayerState;
 
   constructor(videoElement: HTMLVideoElement) {
@@ -38,10 +68,8 @@ export class VideoEventFilter extends EmitterBaseClass {
       this.videoElement = document.querySelector(videoElement);
     }
 
-    this.state = PlayerState.Loading;
-    this.lastState;
+    this.state = getInitialState(videoElement);
 
-    this.emit(PlayerEvents.Loading);
     this.setupEventListeners();
   }
 
@@ -95,7 +123,7 @@ export class VideoEventFilter extends EmitterBaseClass {
   private onPause(): void {
     if (this.state !== PlayerState.Playing) return;
     clearTimeout(this.pauseDebounce);
-    this.pauseDebounce = setTimeout(() => {
+    this.pauseDebounce = window.setTimeout(() => {
       this.emit(PlayerEvents.Pause);
       this.setState(PlayerState.Paused, true);
     }, 200);
