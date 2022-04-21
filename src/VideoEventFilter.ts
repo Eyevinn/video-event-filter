@@ -169,6 +169,7 @@ export class VideoEventFilter extends EmitterBaseClass {
 
   private onTimeUpdate(): void {
     if (
+      this.videoElement.seeking ||
       [
         PlayerState.Loading,
         PlayerState.Paused,
