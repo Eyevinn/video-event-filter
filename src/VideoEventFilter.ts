@@ -56,10 +56,14 @@ function getInitialState(videoElement: HTMLVideoElement): PlayerState {
 
 export class VideoEventFilter extends EmitterBaseClass {
   private videoElement: HTMLVideoElement;
-  private state: PlayerState;
+  private listeners: {
+    type: string;
+    handler: () => void;
+  }[] = [];
 
-  private pauseDebounce: number;
+  private state: PlayerState;
   private lastState: PlayerState;
+  private pauseDebounce: number;
 
   constructor(videoElement: HTMLVideoElement) {
     super();
@@ -74,19 +78,25 @@ export class VideoEventFilter extends EmitterBaseClass {
   }
 
   private setupEventListeners(): void {
-    this.videoElement.addEventListener("loadstart", this.onLoading.bind(this));
-    this.videoElement.addEventListener("loadeddata", this.onLoaded.bind(this));
-    this.videoElement.addEventListener("playing", this.onPlaying.bind(this));
-    this.videoElement.addEventListener("pause", this.onPause.bind(this));
-    this.videoElement.addEventListener("seeking", this.onSeeking.bind(this));
-    this.videoElement.addEventListener("seeked", this.onSeeked.bind(this));
-    this.videoElement.addEventListener("waiting", this.onBuffering.bind(this));
-    this.videoElement.addEventListener(
-      "timeupdate",
-      this.onTimeUpdate.bind(this)
-    );
-    this.videoElement.addEventListener("error", this.onError.bind(this));
-    this.videoElement.addEventListener("ended", this.onEnded.bind(this));
+    this.addListener("loadstart", this.onLoading);
+    this.addListener("loadeddata", this.onLoaded);
+    this.addListener("playing", this.onPlaying);
+    this.addListener("pause", this.onPause);
+    this.addListener("seeking", this.onSeeking);
+    this.addListener("seeked", this.onSeeked);
+    this.addListener("waiting", this.onBuffering);
+    this.addListener("timeupdate", this.onTimeUpdate);
+    this.addListener("error", this.onError);
+    this.addListener("ended", this.onEnded);
+  }
+
+  private addListener(type: string, handler: () => void) {
+    const boundHandler = handler.bind(this);
+    this.videoElement.addEventListener(type, boundHandler);
+    this.listeners.push({
+      type,
+      handler: boundHandler,
+    });
   }
 
   private onLoading(): void {
@@ -189,9 +199,9 @@ export class VideoEventFilter extends EmitterBaseClass {
     this.emit(PlayerEvents.Ended);
   }
 
-  private onError(data): void {
+  private onError(): void {
     if (this.state === PlayerState.Ended) return;
-    this.emit(PlayerEvents.Error, data);
+    this.emit(PlayerEvents.Error, this.videoElement.error);
     this.onEnded();
   }
 
@@ -212,5 +222,12 @@ export class VideoEventFilter extends EmitterBaseClass {
     } else {
       this.lastState = this.state;
     }
+  }
+
+  public destroy() {
+    this.listeners.forEach(({ type, handler }) => {
+      this.videoElement.removeEventListener(type, handler);
+    });
+    super.destroy();
   }
 }
