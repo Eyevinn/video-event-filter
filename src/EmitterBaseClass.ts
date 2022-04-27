@@ -25,4 +25,9 @@ export class EmitterBaseClass {
       this.emitter.emit.apply(this, [event, data]);
     }
   }
+
+  destroy() {
+    this.emitter.all.clear();
+    this.emitter = null;
+  }
 }
