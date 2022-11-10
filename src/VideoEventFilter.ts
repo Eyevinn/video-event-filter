@@ -85,6 +85,7 @@ export class VideoEventFilter extends EmitterBaseClass {
     this.addListener("seeking", this.onSeeking);
     this.addListener("seeked", this.onSeeked);
     this.addListener("waiting", this.onBuffering);
+    this.addListener("ratechange", this.onRateChange);
     this.addListener("timeupdate", this.onTimeUpdate);
     this.addListener("error", this.onError);
     this.addListener("ended", this.onEnded);
@@ -175,6 +176,16 @@ export class VideoEventFilter extends EmitterBaseClass {
     if (this.state !== PlayerState.Buffering) return;
     this.setState(this.lastState, true);
     this.emit(PlayerEvents.Buffered);
+  }
+
+  private onRateChange(): void {
+    if (this.videoElement.playbackRate > 0) return;
+    const isBuffering =
+      this.videoElement.playbackRate === 0 &&
+      this.videoElement.paused === false;
+    if (isBuffering) {
+      this.onBuffering();
+    }
   }
 
   private onTimeUpdate(): void {
