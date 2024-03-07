@@ -1,3 +1,6 @@
+> [!CAUTION]
+> This repository has been deprecated in favour of [eyevinn/media-event-filter](https://github.com/Eyevinn/media-event-filter "Media Event Filter")
+
 Video Event Filter
 ===
 
